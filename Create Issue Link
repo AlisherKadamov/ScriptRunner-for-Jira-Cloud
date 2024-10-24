@@ -7,7 +7,7 @@ def payload = [
     name: "Cloners"
   ]
 ]
-def response = post('/rest/api/3/issueLink')
+post('/rest/api/3/issueLink')
     .header('Content-Type', 'application/json')
     .body(payload)
     .asObject(Map)
