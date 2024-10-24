@@ -1,0 +1,14 @@
+def payload = [
+    inwardIssue: [
+    key: "{issue.key}"],
+  outwardIssue: [
+    key: "{issue.key}"],
+  type: [
+    name: "Cloners"
+  ]
+]
+def response = post('/rest/api/3/issueLink')
+    .header('Content-Type', 'application/json')
+    .body(payload)
+    .asObject(Map)
+    
