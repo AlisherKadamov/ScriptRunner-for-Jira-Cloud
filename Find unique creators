@@ -1,0 +1,24 @@
+def allCreators = []  // List to store all creators
+def startAt = 0       // Initial index for pagination
+def maxResults = 50   // Number of results per request (or lower if timeout issues persist)
+def maxIssues = 5000 // Limit to 50,000 issues
+
+while (startAt < maxIssues) {
+    def url = "/rest/api/2/search?jql=filter=11170&startAt=${startAt}&maxResults=${maxResults}&fields=creator"
+    def response = get(url)
+        .header('Content-Type', 'application/json')
+        .asObject(Map)
+
+    def issues = response.body?.issues
+    if (!issues) break  // Exit loop if no more issues are returned
+
+    // Collect creator display names from the current batch
+    allCreators += issues.collect { it.fields.creator.displayName }
+
+    // Move to the next page
+    startAt += maxResults
+}
+
+// Get unique creators and their count
+def uniqueCreatorsCount = allCreators.unique().size()
+return uniqueCreatorsCount
