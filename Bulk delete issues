@@ -1,4 +1,4 @@
-def response = get('rest/api/2/search?jql=filter=11137')
+def response = get('rest/api/2/search?jql=filter=11134')
     .header('Content-Type', 'application/json')
     .asObject(Map)
 
